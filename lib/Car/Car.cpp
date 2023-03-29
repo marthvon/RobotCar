@@ -68,8 +68,11 @@ templateCar2W
 void AnalogCar2W::run() const {
     if(!isUpdate)
         return;
-    //go back stop
     isUpdate = false;
+    if(speed >= 0) {
+
+        return;
+    }
 }
 
 templateCar2W
