@@ -69,27 +69,30 @@ void AnalogCar2W::run() const {
     if(!isUpdate)
         return;
     isUpdate = false;
-    if(speed > 0) {
-        if(angle >= 0) { //positive then go right
-            analogWrite(forwardLeftWheel, speed * 255);
-            digitalWrite(backwardLeftWheel, LOW);
-        }
-
-        if(angle <= 0) { //negative then go left
-            analogWrite(forwardRightWheel, 0);
-            digitalWrite(backwardRightWheel, LOW);
-        }
+    if(speed == 0.0) {
+        digitalWrite(forwardLeftWheel, LOW);
+        digitalWrite(backwardLeftWheel, LOW);
+        digitalWrite(forwardRightWheel, LOW);
+        digitalWrite(backwardRightWheel, LOW);
         return;
     }
-    const float s = -speed;
-    if(angle <= 0) { //negative then go left
+    const uint8_t s = speed > 0? speed : -speed;
+    const uint8_t sl;
+    const uint8_t sr;
+    if(angle >= 0? speed > 0: speed < 0) {
+        analogWrite(forwardLeftWheel, 255 * s); 
+        digitalWrite(backwardLeftWheel, LOW);
+    } else {
         digitalWrite(forwardLeftWheel, LOW);
-        analogWrite(backwardLeftWheel, s * 255); 
+        analogWrite(backwardLeftWheel, 255 * s);         
     }
-    
-    if(angle >= 0) { // negative then go right
+
+    if() {
+        analogWrite(forwardRightWheel, 255 * s); 
+        digitalWrite(backwardRightWheel, LOW);
+    } else {
         digitalWrite(forwardRightWheel, LOW);
-        analogWrite(backwardRightWheel, s * 255); 
+        analogWrite(backwardRightWheel, 255 * s)
     }
 }
 
