@@ -41,6 +41,8 @@ template<
     float speed;
     float angle;
     bool isUpdate = false;
+
+    void update() const;
 public:
     AnalogCar2W() {}
     void begin() const;

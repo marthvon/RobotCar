@@ -76,23 +76,29 @@ void AnalogCar2W::run() const {
         digitalWrite(backwardRightWheel, LOW);
         return;
     }
+    update();
+}
+
+templateCar2W
+void AnalogCar2W::update() const { 
     const uint8_t s = speed > 0? speed : -speed;
-    const uint8_t sl;
-    const uint8_t sr;
-    if(angle >= 0? speed > 0: speed < 0) {
-        analogWrite(forwardLeftWheel, 255 * s); 
+    float a = cos(angle);
+    const uint8_t sl = 255 * (speed > 0? (angle < 0? (a<0?-a:a): 1.0) : (angle > 0? (a<0?-a:a): 1.0)) * s;
+    const uint8_t sr = 255 * (speed > 0? (angle > 0? (a<0?-a:a): 1.0) : (angle < 0? (a<0?-a:a): 1.0)) * s;
+    if(speed > 0? (a < 0 && angle > 0) : (angle >= 0 || a >= 0)) {
+        analogWrite(forwardLeftWheel, sl); 
         digitalWrite(backwardLeftWheel, LOW);
-    } else {
+    } else { // speed < 0 && (angle <= 0 || a >= 0)
         digitalWrite(forwardLeftWheel, LOW);
-        analogWrite(backwardLeftWheel, 255 * s);         
+        analogWrite(backwardLeftWheel, sl);         
     }
 
-    if() {
-        analogWrite(forwardRightWheel, 255 * s); 
+    if(speed > 0? (a < 0 && angle < 0) : (angle <= 0 || a >= 0)) {
+        analogWrite(forwardRightWheel, sl); 
         digitalWrite(backwardRightWheel, LOW);
     } else {
         digitalWrite(forwardRightWheel, LOW);
-        analogWrite(backwardRightWheel, 255 * s)
+        analogWrite(backwardRightWheel, sl);
     }
 }
 
