@@ -23,6 +23,11 @@ void DigitalCar2W::run() {
     data &= 0b11110111;
 }
 
+templateCar2W 
+void DigitalCar2W::reset() {
+    data = 0b00001011;
+}
+
 templateCar2W
 void DigitalCar2W::setGo(const bool p_go) {
     data &= 0b00001111;
@@ -65,7 +70,7 @@ void AnalogCar2W::begin() const {
 }
 
 templateCar2W
-void AnalogCar2W::run() const {
+void AnalogCar2W::run() {
     if(!isUpdate)
         return;
     isUpdate = false;
@@ -77,6 +82,13 @@ void AnalogCar2W::run() const {
         return;
     }
     update();
+}
+
+templateCar2W
+void AnalogCar2W::reset() {
+    speed = 0;
+    angle = 0;
+    isUpdate = true;
 }
 
 templateCar2W

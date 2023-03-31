@@ -22,6 +22,7 @@ public:
     DigitalCar2W() {}
     void begin() const;
     void run();
+    void reset();
 
     void setGo(const bool p_go);
     void setReverse(const bool p_reverse);
@@ -46,7 +47,8 @@ template<
 public:
     AnalogCar2W() {}
     void begin() const;
-    void run() const;
+    void run();
+    void reset();
 
     void setSpeed(const float p_speed);
     void setAngle(const float p_rad);
