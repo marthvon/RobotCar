@@ -13,7 +13,7 @@ void DigitalCar2W::begin() const {
 }
 
 templateCar2W
-void DigitalCar2W::run() const { 
+void DigitalCar2W::run() { 
     if(!(data & 0b00001000))
         return;
     digitalWrite(forwardLeftWheel, (isGo() & !isReverse() & isRight()? HIGH: LOW));

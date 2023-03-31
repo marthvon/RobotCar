@@ -1,6 +1,8 @@
+#pragma once
 #include <Car.h>
 
-using DC2W = DigitalCar2W<6,9,10,11>;
+using DC2W = DigitalCar2W<6,9,11,10>;
+#include <Car.cpp> //weird 'undefined reference error' that I have no idea why.
 
 void my_routine(DC2W& car) {
     //example:
@@ -30,6 +32,7 @@ void my_routine(DC2W& car) {
     delay(1000);
 
     car.setGo(false);
+    car.setReverse(false);
     delay(1000);
 }
 
