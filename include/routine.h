@@ -1,7 +1,7 @@
 #pragma once
 #include <Car.h>
 
-using DC2W = DigitalCar2W<6,9,11,10>;
+typedef DigitalCar2W<6,9,11,10> DC2W;
 #include <Car.cpp> //weird 'undefined reference error' that I have no idea why. My guess the Car.cpp should be compiled to a static library like lnk
 
 void my_routine(DC2W& car) {

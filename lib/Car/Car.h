@@ -53,4 +53,3 @@ public:
     void setSpeed(const float p_speed);
     void setAngle(const float p_rad);
 };
-
