@@ -2,14 +2,25 @@
 
 using namespace Car;
 
-void DigitalCar2W::begin() const {
+void DigitalCar2W::begin() {
     pinMode(forwardLeftWheel, OUTPUT);
     pinMode(backwardLeftWheel, OUTPUT);
     pinMode(forwardRightWheel, OUTPUT);
     pinMode(backwardRightWheel, OUTPUT);
+
+    #ifdef DEBUG
+        hasInit = true;
+    #endif
 }
 
 void DigitalCar2W::run() { 
+    #ifdef DEBUG
+        if(!hasInit) {
+            Serial.println("[Error]: Pinmodes have not been initialized for this instance of DigitalCar2W.\n\tThe \"run\" methods operation were stopped\n");
+            return;    
+        }
+    #endif
+
     if(!(data & 0b00001000))
         return;
     digitalWrite(forwardLeftWheel, (isGo() & !isReverse() & isRight()? HIGH: LOW));

@@ -3,6 +3,10 @@
 
 namespace Car {
     class AnalogCar2W {
+        #ifdef DEBUG
+            bool hasInit = false;
+        #endif
+
         const uint8_t forwardLeftWheel;
         const uint8_t backwardLeftWheel;
         const uint8_t forwardRightWheel;
@@ -10,12 +14,12 @@ namespace Car {
 
         float speed;
         float angle;
-        bool isUpdate = false;
+        bool isUpdate = true;
 
         void update() const;
     public:
         AnalogCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
-        void begin() const;
+        void begin();
         void run();
         void reset();
 

@@ -9,6 +9,10 @@ namespace Car {
     };
 
     class DigitalCar2W {
+        #ifdef DEBUG
+            bool hasInit = false;
+        #endif
+
         const uint8_t forwardLeftWheel;
         const uint8_t backwardLeftWheel;
         const uint8_t forwardRightWheel;
@@ -21,7 +25,7 @@ namespace Car {
          *      4th bit: (1) should update on run or not (0)
          *      5th bit: go(0) or stop(1)
          */
-        uint8_t data = 0b00000011; 
+        uint8_t data = 0b00001011; 
 
         inline const bool isGo();
         inline const bool isReverse();
@@ -29,7 +33,7 @@ namespace Car {
         inline const bool isRight(); 
     public:
         DigitalCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
-        void begin() const;
+        void begin();
         void run();
         void reset();
 

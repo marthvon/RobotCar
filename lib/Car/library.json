@@ -14,5 +14,5 @@
     },
     "frameworks": "*",
     "platforms": "*",
-    "headers": ["src/DC2W.h", "src/AC2W.h"] 
+    "headers": ["src/DC2W.h", "src/AC2W.h", "src/BufferDC2W.h", "src/BufferAC2W.h"] 
 }

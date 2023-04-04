@@ -9,14 +9,25 @@ AnalogCar2W::AnalogCar2W(
     forwardRightWheel(p_forwardRightWheel), backwardRightWheel(p_backwardRightWheel)
 {}
 
-void AnalogCar2W::begin() const {
+void AnalogCar2W::begin() {
     pinMode(forwardLeftWheel, OUTPUT);
     pinMode(backwardLeftWheel, OUTPUT);
     pinMode(forwardRightWheel, OUTPUT);
     pinMode(backwardRightWheel, OUTPUT);
+
+    #ifdef DEBUG
+        hasInit = true;
+    #endif
 }
 
 void AnalogCar2W::run() {
+    #ifdef DEBUG
+        if(!hasInit) {
+            Serial.println("[Error]: Pinmodes have not been initialized for this instance of AnalogCar2W.\n\tThe \"run\" methods operation were stopped\n");
+            return;    
+        }
+    #endif
+
     if(!isUpdate)
         return;
     isUpdate = false;
