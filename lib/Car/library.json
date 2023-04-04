@@ -1,6 +1,6 @@
 {
     "name" : "Car",
-    "version" : "0.0.1",
+    "version" : "0.0.2",
     "description": "A \"Car\" library is an API for a Robot Car",
     "repository":
     {
