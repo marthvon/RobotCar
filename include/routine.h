@@ -1,21 +1,20 @@
 #pragma once
-#include <Car.h>
+#include <DC2W.h>
 
-typedef DigitalCar2W<6,9,11,10> DC2W;
-#include <Car.cpp> //weird 'undefined reference error' that I have no idea why. My guess the Car.cpp should be compiled to a static library like lnk
+using namespace Car;
 
-void my_routine(DC2W& car) {
+void my_routine(DigitalCar2W& car) {
     //example:
     //forward
     car.setGo(true);
     car.run();
     delay(1000);
     //left forward
-    car.setStir(DC2W::STIR::LEFT);
+    car.setStir(STIR::LEFT);
     car.run();
     delay(1000);
     //right forward
-    car.setStir(DC2W::STIR::RIGHT);
+    car.setStir(STIR::RIGHT);
     car.run();
     delay(1000);
     //right backward
@@ -23,11 +22,11 @@ void my_routine(DC2W& car) {
     car.run();
     delay(1000);
     //left backward
-    car.setStir(DC2W::STIR::LEFT);
+    car.setStir(STIR::LEFT);
     car.run();
     delay(1000);
     //backward
-    car.setStir(DC2W::STIR::NEUTRAL);
+    car.setStir(STIR::NEUTRAL);
     car.run();
     delay(1000);
 
@@ -36,29 +35,29 @@ void my_routine(DC2W& car) {
     delay(1000);
 }
 
-void dance(DC2W& car) {
+void dance(DigitalCar2W& car) {
     //137 bpm per minute song
     car.setGo(true);
-    car.setStir(DC2W::STIR::RIGHT);
+    car.setStir(STIR::RIGHT);
     car.run();
     delay(448);
     
-    car.setStir(DC2W::STIR::LEFT);
+    car.setStir(STIR::LEFT);
     car.run();
     delay(448);
 
-    car.setStir(DC2W::STIR::NEUTRAL);
+    car.setStir(STIR::NEUTRAL);
     car.setReverse(true);
     car.run();
     delay(448);
 
     car.setReverse(false);
-    car.setStir(DC2W::STIR::LEFT);
+    car.setStir(STIR::LEFT);
     car.run();
     delay(448);
 
     car.setReverse(true);
-    car.setStir(DC2W::STIR::RIGHT);
+    car.setStir(STIR::RIGHT);
     car.run();
     delay(446);
     
@@ -67,7 +66,7 @@ void dance(DC2W& car) {
     delay(448);
 
     car.setReverse(true);
-    car.setStir(DC2W::STIR::LEFT);
+    car.setStir(STIR::LEFT);
     car.run();
     delay(448);
 
@@ -75,7 +74,7 @@ void dance(DC2W& car) {
     car.run();
     delay(448);
 
-    car.setStir(DC2W::STIR::NEUTRAL);
+    car.setStir(STIR::NEUTRAL);
     car.setReverse(true);
     car.run();
     delay(448);

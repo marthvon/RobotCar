@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "routine.h"
+#include <routine.h>
 
-DC2W car;
+DigitalCar2W car(6,9,11,10);
 
 void setup() {
   car.begin();

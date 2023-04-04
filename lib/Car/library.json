@@ -1,0 +1,18 @@
+{
+    "name" : "Car",
+    "version" : "0.0.1",
+    "description": "A \"Car\" library is an API for a Robot Car",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/marthvon/RobotCar.git"
+    },
+    "authors": 
+    {
+        "name": "marthvon",
+        "email": "mamertvonn@gmail.com"
+    },
+    "frameworks": "*",
+    "platforms": "*",
+    "headers": ["src/DC2W.h", "src/AC2W.h"] 
+}
