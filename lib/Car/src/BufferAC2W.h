@@ -26,6 +26,7 @@ namespace Car {
         private:
             AnalogCar2W* car;
             const bool isOwned;
+            unsigned long tick = 0;
 
             #ifdef ASYNC
                 int async_protection = 0;

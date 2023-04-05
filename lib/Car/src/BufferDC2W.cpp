@@ -96,7 +96,36 @@ void BufferDC2W::begin() {
 }
 
 void BufferDC2W::run(const unsigned long delta) {
-    if(root->delay)
+    if(!root)
         return;
-    
+    tick += delta;
+    if(tick < root->delay)
+        return;
+    tick -= root->delay;
+    const int* args = root->parameters; 
+    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd) {
+        switch (*cmd)
+        {
+        case COMMAND::RESET:
+            car->reset(); break;
+        case COMMAND::GO:
+            car->setGo((bool)(*args)); 
+            ++args;
+        break;
+        case COMMAND::REVERSE:
+            car->setReverse((bool)(*args)); 
+            ++args;
+        break;
+        case COMMAND::STIR:
+            car->setStir((STIR)(*args)); 
+            ++args;
+        }
+    }
+    Instruction* temp = root;
+    ASYNC_LOCK;
+    root = root->next;
+    if(!root)
+        back = nullptr;
+    delete temp;
+    ASYNC_UNLOCK;
 }

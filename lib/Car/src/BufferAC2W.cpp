@@ -67,7 +67,31 @@ Car::AnalogCar2W* BufferAC2W::get_car() const {
 }
 
 void BufferAC2W::run(const unsigned long delta) {
-    if(root->delay)
+    if(!root)
         return;
-    
+    tick += delta;
+    if(tick < root->delay)
+        return;
+    tick -= root->delay;
+    const float* args = root->parameters; 
+    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd) {
+        switch (*cmd)
+        {
+        case COMMAND::RESET:
+            car->reset(); break;
+        case COMMAND::SPEED:
+            car->setSpeed(*args); 
+            ++args;
+        break;
+        case COMMAND::ANGLE:
+            car->setAngle(*args); 
+        }
+    }
+    Instruction* temp = root;
+    ASYNC_LOCK;
+    root = root->next;
+    if(!root)
+        back = nullptr;
+    delete temp;
+    ASYNC_UNLOCK;
 }
