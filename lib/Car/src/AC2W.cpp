@@ -8,6 +8,10 @@ AnalogCar2W::AnalogCar2W(
 ) : forwardLeftWheel(p_forwardLeftWheel), backwardLeftWheel(p_backwardLeftWheel), 
     forwardRightWheel(p_forwardRightWheel), backwardRightWheel(p_backwardRightWheel)
 {}
+AnalogCar2W::AnalogCar2W(const AnalogCar2W& other) 
+    : forwardLeftWheel(other.forwardLeftWheel), backwardLeftWheel(other.backwardLeftWheel), 
+      forwardRightWheel(other.forwardRightWheel), backwardRightWheel(other.backwardRightWheel)
+{} 
 
 void AnalogCar2W::begin() {
     pinMode(forwardLeftWheel, OUTPUT);

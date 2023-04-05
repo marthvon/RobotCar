@@ -19,6 +19,7 @@ namespace Car {
         void update() const;
     public:
         AnalogCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
+        AnalogCar2W(const AnalogCar2W& other);
         void begin();
         void run();
         void reset();
