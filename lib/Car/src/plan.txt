@@ -12,8 +12,8 @@ ACSW.h
 DCSW.h
 
 //Routine or Buffer types
-BufferAC2W.h - In Progress
-BufferDC2W.h - In Progress
+BufferAC2W.h - Complete
+BufferDC2W.h - Complete
 BufferAC4W.h
 BufferDC4W.h
 BufferACSW.h
