@@ -17,11 +17,16 @@ using namespace Car::Buffer;
 BufferDC2W::Instruction::Instruction(const unsigned long p_delay, const COMMAND* const p_list, const uint8_t length, const int* const p_parameters)
     : delay(p_delay), list(p_list), cmd_length(length), parameters(p_parameters)
 {}
+BufferDC2W::Instruction::~Instruction() {
+    delete[] list;
+    delete[] parameters;
+}
 void BufferDC2W::addBuffer(Instruction* p_instruction) {
     ASYNC_LOCK;
     if(!root) {
         root = p_instruction;
         back = root;
+        ASYNC_UNLOCK;
         return;
     }
     back->next = p_instruction;
@@ -86,6 +91,10 @@ BufferDC2W::BufferDC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwar
 BufferDC2W::~BufferDC2W() {
     if(isOwned)
         delete car;
+    do {
+        back = root->next;
+        delete root;
+    } while(root = back);
 }
 Car::DigitalCar2W* BufferDC2W::get_car() const {
     return car;
@@ -103,22 +112,17 @@ void BufferDC2W::run(const unsigned long delta) {
         return;
     tick -= root->delay;
     const int* args = root->parameters; 
-    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd) {
+    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd, ++args) {
         switch (*cmd)
         {
         case COMMAND::RESET:
             car->reset(); break;
         case COMMAND::GO:
-            car->setGo((bool)(*args)); 
-            ++args;
-        break;
+            car->setGo((bool)(*args)); break;
         case COMMAND::REVERSE:
-            car->setReverse((bool)(*args)); 
-            ++args;
-        break;
+            car->setReverse((bool)(*args)); break;
         case COMMAND::STIR:
             car->setStir((STIR)(*args)); 
-            ++args;
         }
     }
     Instruction* temp = root;

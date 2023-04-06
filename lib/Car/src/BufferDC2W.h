@@ -23,6 +23,7 @@ namespace Car {
                 Instruction* next = nullptr;
                 
                 Instruction(const unsigned long p_delay, const COMMAND* const p_list, const uint8_t length, const int* const p_parameters);
+                ~Instruction();
             };
         private:
             DigitalCar2W* car;

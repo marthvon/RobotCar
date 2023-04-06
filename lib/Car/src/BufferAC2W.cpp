@@ -17,11 +17,16 @@ using namespace Car::Buffer;
 BufferAC2W::Instruction::Instruction(const unsigned long p_delay, const COMMAND* const p_list, const uint8_t length, const float* const p_parameters)
     : delay(p_delay), list(p_list), cmd_length(length), parameters(p_parameters)
 {}
+BufferAC2W::Instruction::~Instruction() {
+    delete list;
+    delete parameters;
+}
 void BufferAC2W::addBuffer(Instruction* p_instruction) {
     ASYNC_LOCK;
     if(!root) {
         root = p_instruction;
         back = root;
+        ASYNC_UNLOCK;
         return;
     }
     back->next = p_instruction;
@@ -57,6 +62,10 @@ BufferAC2W::BufferAC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwar
 BufferAC2W::~BufferAC2W() {
     if(isOwned)
         delete car;
+    do {
+        back = root->next;
+        delete root;
+    } while(root = back);
 }
 void BufferAC2W::begin() {
     if(car && isOwned)
@@ -74,15 +83,13 @@ void BufferAC2W::run(const unsigned long delta) {
         return;
     tick -= root->delay;
     const float* args = root->parameters; 
-    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd) {
+    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd, ++args) {
         switch (*cmd)
         {
         case COMMAND::RESET:
             car->reset(); break;
         case COMMAND::SPEED:
-            car->setSpeed(*args); 
-            ++args;
-        break;
+            car->setSpeed(*args); break;
         case COMMAND::ANGLE:
             car->setAngle(*args); 
         }
@@ -90,7 +97,7 @@ void BufferAC2W::run(const unsigned long delta) {
     Instruction* temp = root;
     ASYNC_LOCK;
     root = root->next;
-    if(!root)
+    if(!root) 
         back = nullptr;
     delete temp;
     ASYNC_UNLOCK;
