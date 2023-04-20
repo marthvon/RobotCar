@@ -30,8 +30,8 @@ void my_routine(DigitalCar2W& car) {
     car.run();
     delay(1000);
 
-    car.setGo(false);
-    car.setReverse(false);
+    car.reset();
+    car.run();
     delay(1000);
 }
 

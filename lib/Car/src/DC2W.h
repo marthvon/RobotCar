@@ -40,7 +40,6 @@ namespace Car {
 
         void setGo(const bool p_go);
         void setReverse(const bool p_reverse);
-
         void setStir(const STIR p_stir); 
     };
 };

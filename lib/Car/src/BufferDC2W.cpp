@@ -34,44 +34,44 @@ void BufferDC2W::addBuffer(Instruction* p_instruction) {
     ASYNC_UNLOCK;
 }
 void BufferDC2W::buffer_reset(const unsigned long after_ms) {
-    addBuffer(new Instruction(after_ms, new COMMAND(COMMAND::RESET), 1, nullptr));
+    addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::RESET}, 1, nullptr));
 }
-void BufferDC2W::buffer_go(const unsigned long after_ms, const bool go, const bool isReset = false) {
+void BufferDC2W::buffer_go(const unsigned long after_ms, const bool go, const bool isReset) {
     if(isReset) {
         addBuffer(new Instruction(after_ms, new COMMAND[2]{COMMAND::RESET, COMMAND::GO}, 2, new int(go)));
         return;
     }
-    addBuffer(new Instruction(after_ms, new COMMAND(COMMAND::GO), 1, new int(go)));
+    addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::GO}, 1, new int(go)));
 }
-void BufferDC2W::buffer_reverse(const unsigned long after_ms, const bool reverse, const bool isReset = false) {
+void BufferDC2W::buffer_reverse(const unsigned long after_ms, const bool reverse, const bool isReset) {
     if(isReset) {
         addBuffer(new Instruction(after_ms, new COMMAND[2]{COMMAND::RESET, COMMAND::REVERSE}, 2, new int(reverse)));
         return;
     }
-    addBuffer(new Instruction(after_ms, new COMMAND(COMMAND::REVERSE), 1, new int(reverse)));
+    addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::REVERSE}, 1, new int(reverse)));
 }
-void BufferDC2W::buffer_stir(const unsigned long after_ms, const Car::STIR stir, const bool isReset = false) {
+void BufferDC2W::buffer_stir(const unsigned long after_ms, const Car::STIR stir, const bool isReset) {
     if(isReset) {
         addBuffer(new Instruction(after_ms, new COMMAND[2]{COMMAND::RESET, COMMAND::STIR}, 2, new int((int)stir)));
         return;
     }
-    addBuffer(new Instruction(after_ms, new COMMAND(COMMAND::STIR), 1, new int((int)stir)));
+    addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::STIR}, 1, new int((int)stir)));
 }
-void BufferDC2W::buffer_go_reverse(const unsigned long after_ms,const bool go, const bool reverse, const bool isReset = false) {
+void BufferDC2W::buffer_go_reverse(const unsigned long after_ms,const bool go, const bool reverse, const bool isReset) {
     if(isReset) {
         addBuffer(new Instruction(after_ms, new COMMAND[3]{COMMAND::RESET, COMMAND::GO, COMMAND::REVERSE}, 3, new int[2]{go, reverse}));
         return;
     }
     addBuffer(new Instruction(after_ms, new COMMAND[2]{COMMAND::GO, COMMAND::REVERSE}, 2, new int[2]{go, reverse}));
 }
-void BufferDC2W::buffer_go_stir(const unsigned long after_ms, const bool go, const Car::STIR stir, const bool isReset = false) {
+void BufferDC2W::buffer_go_stir(const unsigned long after_ms, const bool go, const Car::STIR stir, const bool isReset) {
     if(isReset) {
         addBuffer(new Instruction(after_ms, new COMMAND[3]{COMMAND::RESET, COMMAND::GO, COMMAND::STIR}, 3, new int[2]{go, (int)stir}));
         return;
     }
     addBuffer(new Instruction(after_ms, new COMMAND[2]{COMMAND::GO, COMMAND::STIR}, 2, new int[2]{go, (int)stir}));
 }
-void BufferDC2W::buffer_reverse_stir(const unsigned long after_ms, const bool reverse, const Car::STIR stir, const bool isReset = false) {
+void BufferDC2W::buffer_reverse_stir(const unsigned long after_ms, const bool reverse, const Car::STIR stir, const bool isReset) {
     if(isReset) {
         addBuffer(new Instruction(after_ms, new COMMAND[3]{COMMAND::RESET, COMMAND::REVERSE, COMMAND::STIR}, 3, new int[2]{reverse, (int)stir}));
         return;

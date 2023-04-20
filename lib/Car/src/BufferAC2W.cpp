@@ -18,8 +18,8 @@ BufferAC2W::Instruction::Instruction(const unsigned long p_delay, const COMMAND*
     : delay(p_delay), list(p_list), cmd_length(length), parameters(p_parameters)
 {}
 BufferAC2W::Instruction::~Instruction() {
-    delete list;
-    delete parameters;
+    delete[] list;
+    delete[] parameters;
 }
 void BufferAC2W::addBuffer(Instruction* p_instruction) {
     ASYNC_LOCK;
@@ -34,24 +34,24 @@ void BufferAC2W::addBuffer(Instruction* p_instruction) {
     ASYNC_UNLOCK;
 }
 void BufferAC2W::buffer_reset(const unsigned long after_ms) {
-    addBuffer(new Instruction(after_ms, new COMMAND(COMMAND::RESET), 1, nullptr));
+    addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::RESET}, 1, nullptr));
 }
 void BufferAC2W::buffer_speed_angle(const unsigned long after_ms, const float speed, const float angle) {
     addBuffer(new Instruction(after_ms, new COMMAND[2]{COMMAND::SPEED, COMMAND::ANGLE}, 2, new float[2]{speed, angle}));
 }
-void BufferAC2W::buffer_speed(const unsigned long after_ms, const float speed, const bool isReset = false) {
+void BufferAC2W::buffer_speed(const unsigned long after_ms, const float speed, const bool isReset) {
     if(isReset) {
         addBuffer(new Instruction(after_ms, new COMMAND[2]{COMMAND::RESET, COMMAND::SPEED}, 2, new float(speed)));
         return;
     }
-    addBuffer(new Instruction(after_ms, new COMMAND(COMMAND::SPEED), 1, new float(speed)));
+    addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::SPEED}, 1, new float(speed)));
 }
-void BufferAC2W::buffer_angle(const unsigned long after_ms, const float angle, const bool isReset = false) {
+void BufferAC2W::buffer_angle(const unsigned long after_ms, const float angle, const bool isReset) {
     if(isReset) {
         addBuffer(new Instruction(after_ms, new COMMAND[2]{COMMAND::RESET, COMMAND::ANGLE}, 2, new float(angle)));
         return;
     }
-    addBuffer(new Instruction(after_ms, new COMMAND(COMMAND::ANGLE), 1, new float(angle)));
+    addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::ANGLE}, 1, new float(angle)));
 }
 
 BufferAC2W::BufferAC2W(AnalogCar2W& p_car) : isOwned(false), car(&p_car) {}
