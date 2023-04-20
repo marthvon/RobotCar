@@ -54,9 +54,9 @@ void BufferAC2W::buffer_angle(const unsigned long after_ms, const float angle, c
     addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::ANGLE}, 1, new float(angle)));
 }
 
-BufferAC2W::BufferAC2W(AnalogCar2W& p_car) : isOwned(false), car(&p_car) {}
-BufferAC2W::BufferAC2W(AnalogCar2W&& p_car) : isOwned(true), car(new AnalogCar2W(p_car)) {}
-BufferAC2W::BufferAC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel) 
+constexpr BufferAC2W::BufferAC2W(AnalogCar2W& p_car) : isOwned(false), car(&p_car) {}
+constexpr BufferAC2W::BufferAC2W(AnalogCar2W&& p_car) : isOwned(true), car(new AnalogCar2W(p_car)) {}
+constexpr BufferAC2W::BufferAC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel) 
     : isOwned(true), car(new AnalogCar2W(p_forwardLeftWheel, p_backwardLeftWheel, p_forwardRightWheel, p_backwardRightWheel))
 {}
 BufferAC2W::~BufferAC2W() {
@@ -83,15 +83,15 @@ void BufferAC2W::run(const unsigned long delta) {
         return;
     tick -= root->delay;
     const float* args = root->parameters; 
-    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd, ++args) {
+    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd) {
         switch (*cmd)
         {
         case COMMAND::RESET:
             car->reset(); break;
         case COMMAND::SPEED:
-            car->setSpeed(*args); break;
+            car->setSpeed(*args); ++args; break;
         case COMMAND::ANGLE:
-            car->setAngle(*args); 
+            car->setAngle(*args); ++args;
         }
     }
     Instruction* temp = root;

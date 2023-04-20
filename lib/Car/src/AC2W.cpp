@@ -2,13 +2,13 @@
 
 using namespace Car;
 
-AnalogCar2W::AnalogCar2W(
+constexpr AnalogCar2W::AnalogCar2W(
     const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, 
     const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel
 ) : forwardLeftWheel(p_forwardLeftWheel), backwardLeftWheel(p_backwardLeftWheel), 
     forwardRightWheel(p_forwardRightWheel), backwardRightWheel(p_backwardRightWheel)
 {}
-AnalogCar2W::AnalogCar2W(const AnalogCar2W& other) 
+constexpr AnalogCar2W::AnalogCar2W(const AnalogCar2W& other) 
     : forwardLeftWheel(other.forwardLeftWheel), backwardLeftWheel(other.backwardLeftWheel), 
       forwardRightWheel(other.forwardRightWheel), backwardRightWheel(other.backwardRightWheel)
 {} 

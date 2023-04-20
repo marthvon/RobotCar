@@ -32,8 +32,8 @@ namespace Car {
         inline const bool isLeft();
         inline const bool isRight(); 
     public:
-        DigitalCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
-        DigitalCar2W(DigitalCar2W& other);
+        constexpr DigitalCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
+        constexpr DigitalCar2W(DigitalCar2W& other);
         void begin();
         void run();
         void reset();

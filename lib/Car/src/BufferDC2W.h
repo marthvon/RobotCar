@@ -19,7 +19,7 @@ namespace Car {
                 const unsigned long delay;
                 const COMMAND* const list;
                 const uint8_t cmd_length;
-                const int* const parameters;
+                const int* const parameters; //Union type of bool and STIR
                 Instruction* next = nullptr;
                 
                 Instruction(const unsigned long p_delay, const COMMAND* const p_list, const uint8_t length, const int* const p_parameters);
@@ -37,9 +37,9 @@ namespace Car {
             Instruction* back = nullptr;
             void addBuffer(Instruction* p_instruction);
         public:
-            BufferDC2W(DigitalCar2W& car);
-            BufferDC2W(DigitalCar2W&& car);
-            BufferDC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
+            constexpr BufferDC2W(DigitalCar2W& car);
+            constexpr BufferDC2W(DigitalCar2W&& car);
+            constexpr BufferDC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
             ~BufferDC2W();
 
             void begin();

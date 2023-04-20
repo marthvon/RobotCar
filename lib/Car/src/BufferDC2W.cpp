@@ -83,9 +83,9 @@ void BufferDC2W::buffer_go_reverse_stir(const unsigned long after_ms, const bool
 }
 
 
-BufferDC2W::BufferDC2W(DigitalCar2W& p_car) : isOwned(false), car(&p_car) {}
-BufferDC2W::BufferDC2W(DigitalCar2W&& p_car) : isOwned(true), car(new DigitalCar2W(p_car)) {}
-BufferDC2W::BufferDC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel) 
+constexpr BufferDC2W::BufferDC2W(DigitalCar2W& p_car) : isOwned(false), car(&p_car) {}
+constexpr BufferDC2W::BufferDC2W(DigitalCar2W&& p_car) : isOwned(true), car(new DigitalCar2W(p_car)) {}
+constexpr BufferDC2W::BufferDC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel) 
     : isOwned(true), car(new DigitalCar2W(p_forwardLeftWheel, p_backwardLeftWheel, p_forwardRightWheel, p_backwardRightWheel))
 {}
 BufferDC2W::~BufferDC2W() {
@@ -112,17 +112,17 @@ void BufferDC2W::run(const unsigned long delta) {
         return;
     tick -= root->delay;
     const int* args = root->parameters; 
-    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd, ++args) {
+    for(const COMMAND* cmd = root->list; cmd != root->list + root->cmd_length; ++cmd) {
         switch (*cmd)
         {
         case COMMAND::RESET:
             car->reset(); break;
         case COMMAND::GO:
-            car->setGo((bool)(*args)); break;
+            car->setGo((bool)(*args)); ++args; break;
         case COMMAND::REVERSE:
-            car->setReverse((bool)(*args)); break;
+            car->setReverse((bool)(*args)); ++args; break;
         case COMMAND::STIR:
-            car->setStir((STIR)(*args)); 
+            car->setStir((STIR)(*args)); ++args
         }
     }
     Instruction* temp = root;
