@@ -3,7 +3,7 @@
 
 using namespace Car;
 
-void my_routine(DigitalCar2W& car) {
+inline void my_routine(DigitalCar2W& car) {
     //example:
     //forward
     car.setGo(true);
@@ -35,7 +35,7 @@ void my_routine(DigitalCar2W& car) {
     delay(1000);
 }
 
-void dance(DigitalCar2W& car) {
+inline void dance(DigitalCar2W& car) {
     //137 bpm per minute song
     car.setGo(true);
     car.setStir(STIR::RIGHT);

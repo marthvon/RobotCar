@@ -2,40 +2,27 @@
 
 using namespace Car;
 
-constexpr DigitalCar2W::DigitalCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel)
-    : forwardLeftWheel(p_forwardLeftWheel), backwardLeftWheel(p_backwardLeftWheel), 
-      forwardRightWheel(p_forwardRightWheel), backwardRightWheel(p_backwardRightWheel)
+DigitalCar2W::DigitalCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel)
+    : wheel(p_forwardLeftWheel, p_backwardLeftWheel, p_forwardRightWheel, p_backwardRightWheel)
 {}
-constexpr DigitalCar2W::DigitalCar2W(DigitalCar2W& other) 
-    : forwardLeftWheel(other.forwardLeftWheel), backwardLeftWheel(other.backwardLeftWheel), 
-      forwardRightWheel(other.forwardRightWheel), backwardRightWheel(other.backwardRightWheel)
+DigitalCar2W::DigitalCar2W(DigitalCar2W& other) 
+    : wheel(other.wheel.leftForward, other.wheel.leftBackward, other.wheel.rightForward, other.wheel.rightBackward)
 {} 
 
 void DigitalCar2W::begin() {
-    pinMode(forwardLeftWheel, OUTPUT);
-    pinMode(backwardLeftWheel, OUTPUT);
-    pinMode(forwardRightWheel, OUTPUT);
-    pinMode(backwardRightWheel, OUTPUT);
-
-    #ifdef DEBUG
-        hasInit = true;
-    #endif
+    pinMode(wheel.leftForward, OUTPUT);
+    pinMode(wheel.leftBackward, OUTPUT);
+    pinMode(wheel.rightForward, OUTPUT);
+    pinMode(wheel.rightBackward, OUTPUT);
 }
 
 void DigitalCar2W::run() { 
-    #ifdef DEBUG
-        if(!hasInit) {
-            Serial.println("[Error]: Pinmodes have not been initialized for this instance of DigitalCar2W.\n\tThe \"run\" methods operation were stopped\n");
-            return;    
-        }
-    #endif
-
     if(!(data & 0b00001000))
         return;
-    digitalWrite(forwardLeftWheel, (isGo() & !isReverse() & isRight()? HIGH: LOW));
-    digitalWrite(backwardLeftWheel, (isGo() & isReverse() & isLeft()? HIGH: LOW));
-    digitalWrite(forwardRightWheel, (isGo() & !isReverse() & isLeft()? HIGH: LOW));
-    digitalWrite(backwardRightWheel, (isGo() & isReverse() & isRight()? HIGH: LOW));
+    digitalWrite(wheel.leftForward, (isGo() & !isReverse() & isRight()? HIGH: LOW));
+    digitalWrite(wheel.leftBackward, (isGo() & isReverse() & isLeft()? HIGH: LOW));
+    digitalWrite(wheel.rightForward, (isGo() & !isReverse() & isLeft()? HIGH: LOW));
+    digitalWrite(wheel.rightBackward, (isGo() & isReverse() & isRight()? HIGH: LOW));
     data &= 0b11110111;
 }
 

@@ -2,44 +2,29 @@
 
 using namespace Car;
 
-constexpr AnalogCar2W::AnalogCar2W(
-    const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, 
-    const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel
-) : forwardLeftWheel(p_forwardLeftWheel), backwardLeftWheel(p_backwardLeftWheel), 
-    forwardRightWheel(p_forwardRightWheel), backwardRightWheel(p_backwardRightWheel)
+AnalogCar2W::AnalogCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel) 
+    : wheel(p_forwardLeftWheel, p_backwardLeftWheel, p_forwardRightWheel, p_backwardRightWheel)
 {}
-constexpr AnalogCar2W::AnalogCar2W(const AnalogCar2W& other) 
-    : forwardLeftWheel(other.forwardLeftWheel), backwardLeftWheel(other.backwardLeftWheel), 
-      forwardRightWheel(other.forwardRightWheel), backwardRightWheel(other.backwardRightWheel)
+AnalogCar2W::AnalogCar2W(const AnalogCar2W& other) 
+    : wheel(other.wheel.leftForward, other.wheel.leftBackward, other.wheel.rightForward, other.wheel.rightBackward)
 {} 
 
 void AnalogCar2W::begin() {
-    pinMode(forwardLeftWheel, OUTPUT);
-    pinMode(backwardLeftWheel, OUTPUT);
-    pinMode(forwardRightWheel, OUTPUT);
-    pinMode(backwardRightWheel, OUTPUT);
-
-    #ifdef DEBUG
-        hasInit = true;
-    #endif
+    pinMode(wheel.leftForward, OUTPUT);
+    pinMode(wheel.leftBackward, OUTPUT);
+    pinMode(wheel.rightForward, OUTPUT);
+    pinMode(wheel.rightBackward, OUTPUT);
 }
 
 void AnalogCar2W::run() {
-    #ifdef DEBUG
-        if(!hasInit) {
-            Serial.println("[Error]: Pinmodes have not been initialized for this instance of AnalogCar2W.\n\tThe \"run\" methods operation were stopped\n");
-            return;    
-        }
-    #endif
-
     if(!isUpdate)
         return;
     isUpdate = false;
     if(speed == 0.0) {
-        digitalWrite(forwardLeftWheel, LOW);
-        digitalWrite(backwardLeftWheel, LOW);
-        digitalWrite(forwardRightWheel, LOW);
-        digitalWrite(backwardRightWheel, LOW);
+        digitalWrite(wheel.leftForward, LOW);
+        digitalWrite(wheel.leftBackward, LOW);
+        digitalWrite(wheel.rightForward, LOW);
+        digitalWrite(wheel.rightBackward, LOW);
         return;
     }
     update();
@@ -61,19 +46,19 @@ void AnalogCar2W::update() const {
 
     //if go forward and stir staight or right(+) else stir left(-) but angle<=90deg... otherwise go backward but stir right(+) and angle>90deg
     if(speed < 0? (a < 0 && angle > 0) : (angle >= 0 || a >= 0)) {
-        analogWrite(forwardLeftWheel, sl); 
-        digitalWrite(backwardLeftWheel, LOW);
+        analogWrite(wheel.leftForward,  sl); 
+        digitalWrite(wheel.leftBackward, LOW);
     } else { // speed < 0 && (angle <= 0 || a >= 0)
-        digitalWrite(forwardLeftWheel, LOW);
-        analogWrite(backwardLeftWheel, sl);         
+        digitalWrite(wheel.leftForward,  LOW);
+        analogWrite(wheel.leftBackward, sl);         
     }
     //if go forward and stir staight or left(-) else stir right(+) but angle<=90deg... otherwise go backward but stir left(-) and angle>90deg
     if(speed < 0? (a < 0 && angle < 0) : (angle <= 0 || a >= 0)) {
-        analogWrite(forwardRightWheel, sl); 
-        digitalWrite(backwardRightWheel, LOW);
+        analogWrite(wheel.rightForward, sl); 
+        digitalWrite(wheel.rightBackward, LOW);
     } else {
-        digitalWrite(forwardRightWheel, LOW);
-        analogWrite(backwardRightWheel, sl);
+        digitalWrite(wheel.rightForward, LOW);
+        analogWrite(wheel.rightBackward, sl);
     }
 }
 

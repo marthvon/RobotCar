@@ -9,14 +9,15 @@ namespace Car {
     };
 
     class DigitalCar2W {
-        #ifdef DEBUG
-            bool hasInit = false;
-        #endif
+        struct Wheel {
+            const uint8_t leftForward;
+            const uint8_t leftBackward;
+            const uint8_t rightForward;
+            const uint8_t rightBackward;
 
-        const uint8_t forwardLeftWheel;
-        const uint8_t backwardLeftWheel;
-        const uint8_t forwardRightWheel;
-        const uint8_t backwardRightWheel;
+            constexpr Wheel(const uint8_t p_leftForward, const uint8_t p_leftBackward, const uint8_t p_rightForward, const uint8_t p_rightBackward) 
+                : leftForward(p_leftForward), leftBackward(p_leftBackward), rightForward(p_rightForward), rightBackward(p_rightBackward) {}
+        } const wheel;
 
         /**
          * @brief 8-bits of toggles
@@ -32,8 +33,8 @@ namespace Car {
         inline const bool isLeft();
         inline const bool isRight(); 
     public:
-        constexpr DigitalCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
-        constexpr DigitalCar2W(DigitalCar2W& other);
+        DigitalCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
+        DigitalCar2W(DigitalCar2W& other);
         void begin();
         void run();
         void reset();

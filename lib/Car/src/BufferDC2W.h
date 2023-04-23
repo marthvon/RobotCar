@@ -37,9 +37,9 @@ namespace Car {
             Instruction* back = nullptr;
             void addBuffer(Instruction* p_instruction);
         public:
-            constexpr BufferDC2W(DigitalCar2W& car);
-            constexpr BufferDC2W(DigitalCar2W&& car);
-            constexpr BufferDC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
+            BufferDC2W(DigitalCar2W& car);
+            BufferDC2W(DigitalCar2W&& car);
+            BufferDC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
             ~BufferDC2W();
 
             void begin();

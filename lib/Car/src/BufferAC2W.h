@@ -36,9 +36,9 @@ namespace Car {
             Instruction* back = nullptr;
             void addBuffer(Instruction* p_instruction);
         public:
-            constexpr BufferAC2W(AnalogCar2W& p_car);
-            constexpr BufferAC2W(AnalogCar2W&& p_car);
-            constexpr BufferAC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
+            BufferAC2W(AnalogCar2W& p_car);
+            BufferAC2W(AnalogCar2W&& p_car);
+            BufferAC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
             ~BufferAC2W();
 
             void begin();

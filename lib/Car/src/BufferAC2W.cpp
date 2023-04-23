@@ -54,9 +54,9 @@ void BufferAC2W::buffer_angle(const unsigned long after_ms, const float angle, c
     addBuffer(new Instruction(after_ms, new COMMAND[1]{COMMAND::ANGLE}, 1, new float(angle)));
 }
 
-constexpr BufferAC2W::BufferAC2W(AnalogCar2W& p_car) : isOwned(false), car(&p_car) {}
-constexpr BufferAC2W::BufferAC2W(AnalogCar2W&& p_car) : isOwned(true), car(new AnalogCar2W(p_car)) {}
-constexpr BufferAC2W::BufferAC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel) 
+BufferAC2W::BufferAC2W(AnalogCar2W& p_car) : isOwned(false), car(&p_car) {}
+BufferAC2W::BufferAC2W(AnalogCar2W&& p_car) : isOwned(true), car(new AnalogCar2W(p_car)) {}
+BufferAC2W::BufferAC2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel) 
     : isOwned(true), car(new AnalogCar2W(p_forwardLeftWheel, p_backwardLeftWheel, p_forwardRightWheel, p_backwardRightWheel))
 {}
 BufferAC2W::~BufferAC2W() {

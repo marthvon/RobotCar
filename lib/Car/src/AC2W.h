@@ -3,23 +3,24 @@
 
 namespace Car {
     class AnalogCar2W {
-        #ifdef DEBUG
-            bool hasInit = false;
-        #endif
+        struct Wheel {
+            const uint8_t leftForward;
+            const uint8_t leftBackward;
+            const uint8_t rightForward;
+            const uint8_t rightBackward;
 
-        const uint8_t forwardLeftWheel;
-        const uint8_t backwardLeftWheel;
-        const uint8_t forwardRightWheel;
-        const uint8_t backwardRightWheel;
+            constexpr Wheel(const uint8_t p_leftForward, const uint8_t p_leftBackward, const uint8_t p_rightForward, const uint8_t p_rightBackward) 
+                : leftForward(p_leftForward), leftBackward(p_leftBackward), rightForward(p_rightForward), rightBackward(p_rightBackward) {}
+        } const wheel;
 
-        float speed;
-        float angle;
+        float speed = 0;
+        float angle = 0;
         bool isUpdate = true;
 
         void update() const;
     public:
-        constexpr AnalogCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
-        constexpr AnalogCar2W(const AnalogCar2W& other);
+        AnalogCar2W(const uint8_t p_forwardLeftWheel, const uint8_t p_backwardLeftWheel, const uint8_t p_forwardRightWheel, const uint8_t p_backwardRightWheel);
+        AnalogCar2W(const AnalogCar2W& other);
         void begin();
         void run();
         void reset();

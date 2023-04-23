@@ -2,8 +2,8 @@
 #include <Arduino.h>
 
 class Timer {
-    unsigned long last;
-    unsigned long delta;
+    unsigned long last = 0;
+    unsigned long delta = 0;
 public:
     Timer(){}
 
