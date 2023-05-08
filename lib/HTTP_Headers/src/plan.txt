@@ -9,3 +9,4 @@ For example, Authorization has two modes, the Basic and Digest.
 Step three somehow integrate the basic and advanced http headers together wherein the user can easily switch between the two depending on what's required in their
 project
 
+Don't use trie nodes... too much memory wasted... just use hashmaps
