@@ -10,5 +10,6 @@ public:
     void begin();
     const unsigned long get_delta() const;
     const unsigned long get_timestamp() const;
+    const unsigned long get_delta_from_timestamp(const unsigned long timestamp);
     void tick();
 };
