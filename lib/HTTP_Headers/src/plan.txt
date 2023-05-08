@@ -1,0 +1,11 @@
+
+Step one add a Basic_HTTP_Header class using the Hashmap libraries for ESP32/82...
+The hashmap is use in a function Factory that generated the class using client read as input
+The classes also have their own hashmap used on member functions like has(String&), get(String&), set(String&, void*)
+
+Step two add an advance HTTP Header that initialize classes like Authorization, Cookies, and etc. The classes have functionalities specific to it. 
+For example, Authorization has two modes, the Basic and Digest.
+
+Step three somehow integrate the basic and advanced http headers together wherein the user can easily switch between the two depending on what's required in their
+project
+
