@@ -17,3 +17,7 @@ void Timer::tick() {
     delta = now - last;
     last = now;
 }
+
+const unsigned long get_delta_from_timestamp(const unsigned long timestamp) const {
+    return last - timestamp;
+}
